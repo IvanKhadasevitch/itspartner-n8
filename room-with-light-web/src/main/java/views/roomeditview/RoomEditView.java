@@ -2,7 +2,6 @@ package views.roomeditview;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import entities.Room;
@@ -42,14 +41,20 @@ public class RoomEditView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
+        MainUI.startPage.pushState(MainUI.contextPath + "/" + VIEW_NAME);
 
-        Page.getCurrent().pushState(VIEW_NAME);      // !!!!!!!!!!
-
-        configureComponents();
-        buildLayout();
+        // Read the initial URI fragment
+        enter();
 
         MainUI myUI = (MainUI) UI.getCurrent();
         myUI.getNavigator().getDisplay().showView(this);
+    }
+
+    private void enter() {
+//        ... initialize the UI ...
+        configureComponents();
+        buildLayout();
+
     }
 
     private void configureComponents() {
@@ -68,6 +73,7 @@ public class RoomEditView extends VerticalLayout implements View {
         deleteRoomBtn.setStyleName(ValoTheme.BUTTON_DANGER);
         deleteRoomBtn.setEnabled(false);
         deleteRoomBtn.addClickListener(event -> {
+            // try delete selected items
             int deletedRoomsCount = deleteRooms(roomList.getSelectedItems());
             deleteRoomBtn.setEnabled(false);
             addRoomBtn.setEnabled(true);    // switch on addNewRoom possibility

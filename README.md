@@ -14,5 +14,5 @@ user: root
 password: root
 
 for web: 
-use contextpath: /
+use contextpath: (you can set any what you need)
 final project name: room.war

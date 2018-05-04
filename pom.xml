@@ -118,10 +118,8 @@
                 <version>${jetty.plugin.version}</version>
                 <configuration>
                     <scanIntervalSeconds>2</scanIntervalSeconds>
-                    <webApp>
-                        <contextPath>/</contextPath>
-                        <descriptor></descriptor>
-                    </webApp>
+                    <!-- to run in maven: mvn jetty:run-war -->
+                    <war>${project.basedir}/room-with-light-web/target/room.war</war>
                 </configuration>
             </plugin>
         </plugins>

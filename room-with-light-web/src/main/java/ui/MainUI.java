@@ -22,13 +22,22 @@ import javax.servlet.annotation.WebServlet;
 public class MainUI extends UI {
     private static Logger log = Logger.getLogger(RoomEditForm.class);
 
+    public static String contextPath = null;
+    public static Page startPage = null;
     private final MainViewDisplay mainViewDisplay = new MainViewDisplay();
 
     private final MainMenu mainMenu = new MainMenu();
 
     @Override
     protected void init(VaadinRequest request) {
-        Page.getCurrent().pushState("/room");
+        if (contextPath == null) {
+            contextPath = request.getContextPath();
+            startPage = Page.getCurrent();
+        }
+        // set page URI in browser history
+        startPage.pushState(contextPath + "/" + DefaultView.VIEW_NAME);
+
+        // scan event when URI changed by navigation in browser history
         getPage().addPopStateListener( e -> enter() );
 
         // Read the initial URI fragment

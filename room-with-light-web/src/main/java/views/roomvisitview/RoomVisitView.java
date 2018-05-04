@@ -3,7 +3,6 @@ package views.roomvisitview;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.Page;
 import com.vaadin.ui.*;
 import com.vaadin.ui.components.grid.SingleSelectionModel;
 import com.vaadin.ui.renderers.ComponentRenderer;
@@ -35,20 +34,25 @@ public class RoomVisitView extends VerticalLayout implements View {
 
     public RoomVisitView() {
         super();
-        //        delete after debug
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        Page.getCurrent().pushState(VIEW_NAME);      // !!!!!!!!!!
+        MainUI.startPage.pushState(MainUI.contextPath + "/" + VIEW_NAME);
 
-        configureComponents();
-        buildLayout();
+        // Read the initial URI fragment
+        enter();
 
         MainUI myUI = (MainUI) UI.getCurrent();
         myUI.getNavigator().getDisplay().showView(this);
     }
 
+    private void enter() {
+//        ... initialize the UI ...
+        configureComponents();
+        buildLayout();
+
+    }
     private void configureComponents() {
         // filterByName field with clear button
         filterByName = new FilterWithClearBtn("Filter by name...", e -> updateRoomList());
